@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">Game Stash</string>
     <string name="add_game">Add Game</string>
+    <string name="nothing_to_display">Nothing to display</string>
     <string name="game_name">Name</string>
     <string name="game_description">Small description</string>
     <string name="game_rate">Rate:</string>
     <string name="save">Save</string>
     <string name="star_content_desc">Star Icon</string>
     <string name="delete_content_desc">Delete Icon</string>
+    <string name="error_name">You need to enter the name</string>
+    <string name="error_desc">You need to enter the description</string>
 </resources>

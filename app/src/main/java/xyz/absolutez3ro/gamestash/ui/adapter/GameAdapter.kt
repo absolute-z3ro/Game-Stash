@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import xyz.absolutez3ro.gamestash.R
 import xyz.absolutez3ro.gamestash.data.room.Game
 
-class GameAdapter(val clickListener: GameClickListener) :
+class GameAdapter(private val clickListener: GameClickListener) :
     RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
     var data = listOf<Game>()
