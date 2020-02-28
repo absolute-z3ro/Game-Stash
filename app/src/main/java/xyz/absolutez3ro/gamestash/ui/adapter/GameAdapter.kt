@@ -1,14 +1,11 @@
 package xyz.absolutez3ro.gamestash.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import xyz.absolutez3ro.gamestash.R
 import xyz.absolutez3ro.gamestash.data.room.Game
+import xyz.absolutez3ro.gamestash.databinding.GameItemBinding
 
 class GameAdapter(private val clickListener: GameClickListener) :
     RecyclerView.Adapter<GameAdapter.ViewHolder>() {
@@ -29,17 +26,15 @@ class GameAdapter(private val clickListener: GameClickListener) :
         holder.bind(data[position], clickListener)
     }
 
-    class ViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val gameName: TextView = itemView.findViewById(R.id.name)
-        private val gameDesc: TextView = itemView.findViewById(R.id.description)
-        private val rating: TextView = itemView.findViewById(R.id.rating)
-        private val deleteButton: ImageButton = itemView.findViewById(R.id.delete)
+
+    class ViewHolder private constructor(private val binding: GameItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(game: Game, clickListener: GameClickListener) {
-            gameName.text = game.name
-            gameDesc.text = game.description
-            rating.text = game.rating.toString()
-            deleteButton.setOnClickListener {
+            binding.name.text = game.name
+            binding.description.text = game.description
+            binding.rating.text = game.rating.toString()
+            binding.delete.setOnClickListener {
                 clickListener.onClick(game)
             }
         }
@@ -47,8 +42,8 @@ class GameAdapter(private val clickListener: GameClickListener) :
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.game_item, parent, false)
-                return ViewHolder(view)
+                val binding = GameItemBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
             }
         }
     }
