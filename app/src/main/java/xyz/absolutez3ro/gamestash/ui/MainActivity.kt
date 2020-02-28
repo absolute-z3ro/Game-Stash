@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import xyz.absolutez3ro.gamestash.R
 import xyz.absolutez3ro.gamestash.data.room.Game
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         val nothingToDisplay: TextView = findViewById(R.id.nothing_to_display)
         val fab: ExtendedFloatingActionButton = findViewById(R.id.extended_fab)
+        val appBarLayout: AppBarLayout = findViewById(R.id.app_bar_layout)
 
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         viewModel.games?.observe(this, Observer { games ->
@@ -54,6 +56,15 @@ class MainActivity : AppCompatActivity() {
                 DividerItemDecoration.VERTICAL
             )
         )
+        val scrollListener = object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (recyclerView.canScrollVertically(-1))
+                    appBarLayout.elevation = 8.0f
+                else
+                    appBarLayout.elevation = 0.0f
+            }
+        }
+        recyclerView.addOnScrollListener(scrollListener)
 
         fab.setOnClickListener {
             startActivityForResult(
