@@ -3,7 +3,7 @@ package xyz.absolutez3ro.gamestash.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -33,12 +33,12 @@ class GameAdapter(private val clickListener: GameClickListener) :
         private val gameName: TextView = itemView.findViewById(R.id.name)
         private val gameDesc: TextView = itemView.findViewById(R.id.description)
         private val rating: TextView = itemView.findViewById(R.id.rating)
-        private val deleteButton: ImageView = itemView.findViewById(R.id.delete)
+        private val deleteButton: ImageButton = itemView.findViewById(R.id.delete)
 
         fun bind(game: Game, clickListener: GameClickListener) {
             gameName.text = game.name
             gameDesc.text = game.description
-            rating.text = "${game.rating}"
+            rating.text = game.rating.toString()
             deleteButton.setOnClickListener {
                 clickListener.onClick(game)
             }

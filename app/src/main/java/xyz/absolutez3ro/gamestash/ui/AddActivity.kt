@@ -44,7 +44,7 @@ class AddActivity : AppCompatActivity() {
                 val bundle = Bundle().apply {
                     putString(NAME, inputName.text.toString())
                     putString(DESC, inputDesc.text.toString())
-                    putInt(RATING, ratingBar.numStars)
+                    putInt(RATING, ratingBar.rating.toInt())
                 }
                 replyIntent.putExtra(EXTRA_REPLY, bundle)
                 setResult(Activity.RESULT_OK, replyIntent)
