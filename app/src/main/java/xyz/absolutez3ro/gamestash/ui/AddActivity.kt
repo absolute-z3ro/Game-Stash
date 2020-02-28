@@ -3,27 +3,28 @@ package xyz.absolutez3ro.gamestash.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.RatingBar
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import xyz.absolutez3ro.gamestash.R
+import xyz.absolutez3ro.gamestash.databinding.ActivityAddBinding
 
 class AddActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityAddBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add)
+        binding = ActivityAddBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupViews()
     }
 
     private fun setupViews() {
-        val inputName: TextInputEditText = findViewById(R.id.input_game_name)
-        val inputLayoutName: TextInputLayout = findViewById(R.id.inputLayout_game_name)
-        val inputDesc: TextInputEditText = findViewById(R.id.input_game_desc)
-        val inputLayoutDesc: TextInputLayout = findViewById(R.id.inputLayout_game_desc)
-        val ratingBar: RatingBar = findViewById(R.id.rating_bar)
-        val save: ExtendedFloatingActionButton = findViewById(R.id.save_extended_fab)
+        val inputName = binding.inputGameName
+        val inputLayoutName = binding.inputLayoutGameName
+        val inputDesc = binding.inputGameDesc
+        val inputLayoutDesc = binding.inputLayoutGameDesc
+        val ratingBar = binding.ratingBar
+        val save = binding.saveExtendedFab
 
         inputName.setOnClickListener {
             inputLayoutName.error = null

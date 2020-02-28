@@ -4,18 +4,15 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import xyz.absolutez3ro.gamestash.R
 import xyz.absolutez3ro.gamestash.data.room.Game
 import xyz.absolutez3ro.gamestash.data.viewmodel.GameViewModel
+import xyz.absolutez3ro.gamestash.databinding.ActivityMainBinding
 import xyz.absolutez3ro.gamestash.ui.adapter.GameAdapter
 import xyz.absolutez3ro.gamestash.ui.adapter.GameClickListener
 
@@ -23,17 +20,19 @@ class MainActivity : AppCompatActivity() {
 
     private val addActivityRequestCode = 7
 
+    private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: GameViewModel
     private lateinit var adapter: GameAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-        val nothingToDisplay: TextView = findViewById(R.id.nothing_to_display)
-        val fab: ExtendedFloatingActionButton = findViewById(R.id.extended_fab)
-        val appBarLayout: AppBarLayout = findViewById(R.id.app_bar_layout)
+        val recyclerView = binding.recyclerView
+        val nothingToDisplay = binding.nothingToDisplay
+        val fab = binding.extendedFab
+        val appBarLayout = binding.appBarLayout
 
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         viewModel.games?.observe(this, Observer { games ->
