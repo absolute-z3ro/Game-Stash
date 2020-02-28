@@ -4,9 +4,12 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import xyz.absolutez3ro.gamestash.data.room.Game
+import xyz.absolutez3ro.gamestash.data.room.GameDao
 import xyz.absolutez3ro.gamestash.data.room.GameRoomDatabase
 
 class Repository private constructor(private val database: GameRoomDatabase) {
+    private var dao: GameDao = database.gameDao()
+
     companion object {
         @Volatile
         private var INSTANCE: Repository? = null
@@ -22,13 +25,16 @@ class Repository private constructor(private val database: GameRoomDatabase) {
         }
     }
 
-    fun allGames(): LiveData<List<Game>>? = database.gameDao().getAllGames()
+    fun allGames(): LiveData<List<Game>>? = dao.getAllGames()
 
     suspend fun insert(game: Game) = withContext(Dispatchers.IO) {
-        database.gameDao().insertGame(game)
+        if (dao.getGame(game.name).size == 1)
+            dao.updateGame(game)
+        else
+            database.gameDao().insertGame(game)
     }
 
     suspend fun delete(game: Game) = withContext(Dispatchers.IO) {
-        database.gameDao().deleteGame(game)
+        dao.deleteGame(game)
     }
 }
