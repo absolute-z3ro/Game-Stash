@@ -15,15 +15,12 @@ class GameAdapter(private val clickListener: GameClickListener) :
             notifyDataSetChanged()
         }
 
-    private var _binding: GameItemBinding? = null
-
-    private val binding get() = _binding!!
 
     override fun getItemCount() = data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        _binding = GameItemBinding.inflate(layoutInflater, parent, false)
+        val binding = GameItemBinding.inflate(layoutInflater, parent, false)
         return ViewHolder.from(binding)
     }
 
