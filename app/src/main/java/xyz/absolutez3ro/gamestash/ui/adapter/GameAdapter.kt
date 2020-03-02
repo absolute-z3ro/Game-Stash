@@ -2,7 +2,6 @@ package xyz.absolutez3ro.gamestash.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import xyz.absolutez3ro.gamestash.data.room.Game
 import xyz.absolutez3ro.gamestash.databinding.GameItemBinding
@@ -16,10 +15,16 @@ class GameAdapter(private val clickListener: GameClickListener) :
             notifyDataSetChanged()
         }
 
+    private var _binding: GameItemBinding? = null
+
+    private val binding get() = _binding!!
+
     override fun getItemCount() = data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        _binding = GameItemBinding.inflate(layoutInflater, parent, false)
+        return ViewHolder.from(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -40,22 +45,10 @@ class GameAdapter(private val clickListener: GameClickListener) :
         }
 
         companion object {
-            fun from(parent: ViewGroup): ViewHolder {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = GameItemBinding.inflate(layoutInflater, parent, false)
+            fun from(binding: GameItemBinding): ViewHolder {
                 return ViewHolder(binding)
             }
         }
-    }
-}
-
-class GameDiffCallback : DiffUtil.ItemCallback<Game>() {
-    override fun areContentsTheSame(oldItem: Game, newItem: Game): Boolean {
-        return oldItem == newItem
-    }
-
-    override fun areItemsTheSame(oldItem: Game, newItem: Game): Boolean {
-        return oldItem.name == newItem.name
     }
 }
 
