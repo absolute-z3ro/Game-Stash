@@ -32,10 +32,14 @@ class GameAdapter(private val clickListener: GameClickListener) :
         holder.bind(data[position], clickListener)
     }
 
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        _binding = null
+    }
 
     class ViewHolder private constructor(private val binding: GameItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
+        
         fun bind(game: Game, clickListener: GameClickListener) {
             binding.name.text = game.name
             binding.description.text = game.description
